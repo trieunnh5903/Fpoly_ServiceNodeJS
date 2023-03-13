@@ -12,12 +12,20 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+// console.log(path.join(__dirname, 'views'))
+// console.log(__dirname)
+// D:\GitHub\Fpoly_AndroidService\server
+
+//partials
+var hbs = require('hbs');
+hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
