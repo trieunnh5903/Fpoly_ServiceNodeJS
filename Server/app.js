@@ -7,6 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productRouter = require('./routes/product');
+const dienTichRouter = require('./routes/dientich.js');
+const chuViRouter = require('./routes/chuvi.js');
 var app = express();
 
 // view engine setup
@@ -30,6 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/product', productRouter);
+
+app.use('/dien-tich', dienTichRouter);
+app.use('/chu-vi', chuViRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
