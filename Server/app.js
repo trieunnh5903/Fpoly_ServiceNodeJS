@@ -5,10 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const productRouter = require('./routes/product');
-const dienTichRouter = require('./routes/dientich.js');
-const chuViRouter = require('./routes/chuvi.js');
+
+
+
+const productApiRouter = require('./routes/api/ProductApi');
+const userApiRouter = require('./routes/api/UserApi');
+const productCpanelRouter = require('./routes/cpanel/ProductCpanel');
+const userCpanelRouter = require('./routes/cpanel/UserCpanel');
 var app = express();
 
 // view engine setup
@@ -30,24 +33,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/product', productRouter);
+app.use('/api/user', userApiRouter);
+app.use('/api/product', productApiRouter);
+app.use('/cpanel/user', userCpanelRouter);
+app.use('/cpanel/product', productCpanelRouter);
 
-app.use('/dien-tich', dienTichRouter);
-app.use('/chu-vi', chuViRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-/*
-req, res, next
-req -> request :  
-  request.query: lay du lieu tu query string
-  request.body: lấy dữ liệu tiwf form
-  request.param: lấy dữ liệu từ url
-*/
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -60,3 +56,10 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+/*
+req, res, next
+req -> request :  
+  request.query: lay du lieu tu query string
+  request.body: lấy dữ liệu tiwf form
+  request.param: lấy dữ liệu từ url
+*/
