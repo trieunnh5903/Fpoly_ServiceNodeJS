@@ -52,6 +52,24 @@ router.post('/ket-hop/:loai', function (req, res, next) {
   res.render('index', { result: result })
 });
 
+
+// http://localhost:3000/chu-vi?a=2&b=3
+// router.post('/chu-vi', async function (req, res, next) {
+//   const { a, b } = req.query;
+//   const { loaihinh } = req.body;
+//   let kq = '';
+//   const pi = 3.14;
+//   if (loaihinh == 'chunhat') {
+//       kq = `Chu vi hình chữ nhật là ${((Number(a) + Number(b)) * 2)}`;
+//   } else if (loaihinh == 'hinhvuong') {
+//       kq = `Chu vi hình vuông là ${Number(a) * 4}`;
+//   } else if (loaihinh == 'hinhtron') {
+//       kq = `Chu vi hình tròn là ${Number(a) * 2 * pi}`;
+//   }
+//   //  res.render('layout',{title: 'Diện tích',kq:kq});
+//   res.json({ title: 'Chu vi', kq: kq });
+// });
+
 //localhost:300/ket-hop/loai?name=abc&age=18
 // router.post('/ket-hop/:loai', function(req, res, next) {
 //   const {loai} = req.params;
