@@ -23,4 +23,20 @@ router.post('/login', async function(req, res, next){
     return res.redirect('/login');
   }
 });
+
+
+//statistic
+router.get('/statistic', function(req, res, next){
+  res.render('product/statistic');
+});
+
+//form
+router.get('/form', function(req, res, next){
+  res.render('product/form');
+});
+
+//table
+router.get('/table', function(req, res, next){
+  res.render('product/table');
+});
 module.exports = router;
