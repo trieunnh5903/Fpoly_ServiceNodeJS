@@ -371,7 +371,7 @@
 
             <!-- ========== tables-wrapper start ========== -->
             <div class="tables-wrapper">
-                <div class="row">
+                {{!-- <div class="row">
                     <div class="col-lg-12">
                         <div class="card-style mb-30">
                             <h6 class="mb-10">Data Table</h6>
@@ -870,7 +870,7 @@
                         <!-- end card -->
                     </div>
                     <!-- end col -->
-                </div>
+                </div> --}}
                 <!-- end row -->
 
                 <div class="row">
@@ -892,10 +892,10 @@
                                                 <h6>Name</h6>
                                             </th>
                                             <th>
-                                                <h6>Email</h6>
+                                                <h6>Price</h6>
                                             </th>
                                             <th>
-                                                <h6>Project</h6>
+                                                <h6>Quantity</h6>
                                             </th>
                                             <th>
                                                 <h6>Status</h6>
@@ -907,34 +907,37 @@
                                         <!-- end table row-->
                                     </thead>
                                     <tbody>
+                                        {{#each products}}
                                         <tr>
                                             <td>
-                                                <div class="employee-image">
-                                                    <img src="images/lead/lead-1.png" alt="" />
+                                                <div style="width: 150px;">
+                                                    <img style="width: 150px;" src={{this.image}} alt="" />
                                                 </div>
                                             </td>
                                             <td class="min-width">
-                                                <p>Esther Howard</p>
+                                                <p>{{this.name}}</p>
                                             </td>
                                             <td class="min-width">
-                                                <p><a href="#0">yourmail@gmail.com</a></p>
+                                                <p><a href="#0">{{this.price}}</a></p>
                                             </td>
                                             <td class="min-width">
-                                                <p>Admin Dashboard Design</p>
+                                                <p>{{this.quantity}}</p>
                                             </td>
                                             <td class="min-width">
                                                 <span class="status-btn active-btn">Active</span>
                                             </td>
                                             <td>
                                                 <div class="action">
-                                                    <button class="text-danger">
+                                                    <button onclick="confirmDelete('{{this._id}}');"
+                                                        class="text-danger">
                                                         <i class="lni lni-trash-can"></i>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
+                                        {{/each}}
                                         <!-- end table row -->
-                                        <tr>
+                                        {{!-- <tr>
                                             <td>
                                                 <div class="employee-image">
                                                     <img src="images/lead/lead-2.png" alt="" />
@@ -1067,7 +1070,7 @@
                                                     </button>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                         <!-- end table row -->
                                     </tbody>
                                 </table>
@@ -1084,5 +1087,41 @@
         </div>
         <!-- end container -->
     </section>
+    <script>
+
+        const fetchAPI = async (url, option) => {
+            const res = await fetch(url, option);
+            return res.json();
+        }
+        const deleteProduct = (id) => {
+            const url =  `cpanel/product/${id}/delete`;
+            const option = {
+                method: 'get',
+                headers: {'Content-Type' : '/application/json'}
+            }
+            
+            try
+        }
+
+        const confirmDelete = (id) => {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                        });
+                        deleteProduct(id)
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+        }
+    </script>
     <!-- ========== table components end ========== -->
 </main>

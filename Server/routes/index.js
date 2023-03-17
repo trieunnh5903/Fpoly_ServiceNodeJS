@@ -36,7 +36,7 @@ router.get('/form', function(req, res, next){
 });
 
 //table
-router.get('/table', function(req, res, next){
-  res.render('product/table');
-});
+// router.get('/table', function(req, res, next){
+//   res.render('product/table');
+// });
 module.exports = router;
