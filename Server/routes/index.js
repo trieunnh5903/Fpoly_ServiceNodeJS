@@ -18,7 +18,7 @@ router.post('/login', async function(req, res, next){
   const {email, password} = req.body;
   const result = await userController.login(email, password);
   if (result) {
-    return res.redirect('/');
+    return res.redirect('/cpanel/product/list-product');
   }else {
     return res.redirect('/login');
   }
@@ -35,8 +35,8 @@ router.get('/form', function(req, res, next){
   res.render('product/form');
 });
 
-//table
-// router.get('/table', function(req, res, next){
-//   res.render('product/table');
-// });
+// table
+router.get('/table',async function(req, res, next){
+  res.render('product/table');
+});
 module.exports = router;
