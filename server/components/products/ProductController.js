@@ -9,6 +9,7 @@ const deleteProductById = async (id) => {
     return await productService.deleteProductById(id);
 }
 
+// const updateProductById = async(id)
 const addNewProduct = async (name, price, quantity, image, category) => {
      await productService.addNewProduct(name, price, quantity, image, category)
 }

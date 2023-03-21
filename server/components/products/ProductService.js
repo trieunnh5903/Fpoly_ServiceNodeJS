@@ -20,6 +20,30 @@ const deleteProductById = async (id) => {
 
 };
 
+// lay thong tin san pham theo id
+
+const getProductBuyId = async (id) => {
+    try {
+        let product = data.find(item => item.id == id);
+        if(product) return product;
+    } catch (error) {
+        console.log("getProductBuyId " + error);
+        return null;
+    }
+}
+
+// const updateProduct = async (id, name, price, quantity, image, category) => {
+//     try {
+//         const product = data.find(item => item._id == id);
+//         if (product){
+//             data = data.map(item => {
+
+//             })
+//         }
+//     } catch (error) {
+        
+//     }
+// }
 
 const addNewProduct = async (name, price, quantity, image, category) => {
     try {

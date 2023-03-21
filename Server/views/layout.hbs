@@ -32,6 +32,49 @@
   {{{body}}}
   {{!-- {{> footer}} --}}
 
+  <script>
+    const fetchAPI = async (url, option) => {
+      const res = await fetch(url, option);
+      return res.json();
+    }
+
+    const deleteProduct = async (id) => {
+      const url = `${id}/delete`;
+      const option = {
+        method: 'get',
+        headers: { 'Content-Type': '/application/json' }
+      }
+      try {
+        const result = await fetchAPI(url, option);
+          console.log(result)
+        
+        if (result.status) {
+          window.location.reload();
+        } else {
+          console.log("Delete error: ", result)
+        }
+      } catch (e) {
+        console.log("Delete error: ", e)
+      }
+    }
+
+    const confirmDelete = (id) => {
+      swal({
+        title: "Xác nhận xóa?",
+        text: "Bạn có chắc muốn xóa sản phẩm không!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            deleteProduct(id)
+          } else {
+            swal("Xóa không thành công!");
+          }
+        });
+    }
+  </script>
 
   {{!-- script dashboard --}}
   <script>
@@ -753,49 +796,7 @@
 
   </script>
 
-  <script>
-    const fetchAPI = async (url, option) => {
-      const res = await fetch(url, option);
-      return res.json();
-    }
-
-    const deleteProduct = async (id) => {
-      const url = `${id}/delete`;
-      const option = {
-        method: 'get',
-        headers: { 'Content-Type': '/application/json' }
-      }
-      try {
-        const result = await fetchAPI(url, option);
-          console.log(result)
-        
-        if (result.status) {
-          window.location.reload();
-        } else {
-          console.log("Delete error: ", result)
-        }
-      } catch (e) {
-        console.log("Delete error: ", e)
-      }
-    }
-
-    const confirmDelete = (id) => {
-      swal({
-        title: "Xác nhận xóa?",
-        text: "Bạn có chắc muốn xóa sản phẩm không!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            deleteProduct(id)
-          } else {
-            swal("Xóa không thành công!");
-          }
-        });
-    }
-  </script>
+  
 
 </body>
 
