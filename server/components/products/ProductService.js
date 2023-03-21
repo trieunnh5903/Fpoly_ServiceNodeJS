@@ -19,9 +19,26 @@ const deleteProductById = async (id) => {
     }
 
 };
-module.exports = { getAllProducts, deleteProductById }
 
-const data = [{
+
+const addNewProduct = async (name, price, quantity, image, category) => {
+    try {
+        const newProduct = {
+            _id: data.length + 1,
+            name,
+            price,
+            quantity,
+            image,
+            category
+        }
+        data.push(newProduct);
+    } catch (error) {
+        console.log("addNewProduct: " + error)
+    }
+}
+module.exports = { getAllProducts, deleteProductById , addNewProduct}
+
+var data = [{
     "_id": 1,
     "name": "Lyndsie",
     "price": 51,

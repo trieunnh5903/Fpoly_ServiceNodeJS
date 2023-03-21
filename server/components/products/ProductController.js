@@ -1,3 +1,4 @@
+
 const productService = require('./ProductService');
 
 const getAllProducts = async()=> {
@@ -7,4 +8,8 @@ const getAllProducts = async()=> {
 const deleteProductById = async (id) => {
     return await productService.deleteProductById(id);
 }
-module.exports = {getAllProducts, deleteProductById};
+
+const addNewProduct = async (name, price, quantity, image, category) => {
+     await productService.addNewProduct(name, price, quantity, image, category)
+}
+module.exports = {getAllProducts, deleteProductById, addNewProduct};
