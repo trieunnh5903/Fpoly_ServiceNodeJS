@@ -24,26 +24,38 @@ const deleteProductById = async (id) => {
 
 const getProductBuyId = async (id) => {
     try {
-        let product = data.find(item => item.id == id);
-        if(product) return product;
+        let product = data.find(item => item._id == id);
+        return product;
     } catch (error) {
-        console.log("getProductBuyId " + error);
+        console.log("getProductBuyId error:  " + error);
         return null;
     }
 }
 
-// const updateProduct = async (id, name, price, quantity, image, category) => {
-//     try {
-//         const product = data.find(item => item._id == id);
-//         if (product){
-//             data = data.map(item => {
 
-//             })
-//         }
-//     } catch (error) {
-        
-//     }
-// }
+
+const updateProduct = async (id, name, price, quantity, image, category) => {
+    try {
+        const product = data.find(item => item._id == id);
+        if (product) {
+            data = data.map(item => {
+                if (item._id == id) {
+                    item.category = category ? category : item.category;
+                    item.image = image ? image : item.image;
+                    item.name = name ? name : item.name;
+                    item.price = price ? price : item.price;
+                    item.quantity = quantity ? quantity : item.quantity;
+                }
+                return item;
+            });
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log("updateProduct error: " + error);
+        return false;
+    }
+}
 
 const addNewProduct = async (name, price, quantity, image, category) => {
     try {
@@ -60,7 +72,7 @@ const addNewProduct = async (name, price, quantity, image, category) => {
         console.log("addNewProduct: " + error)
     }
 }
-module.exports = { getAllProducts, deleteProductById , addNewProduct}
+module.exports = { getAllProducts, deleteProductById, addNewProduct, updateProduct, getProductBuyId }
 
 var data = [{
     "_id": 1,

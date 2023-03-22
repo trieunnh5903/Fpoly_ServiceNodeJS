@@ -24,22 +24,21 @@ router.get('/:id/delete', async function (req, res, next) {
 
 // http://localhost:3000/cpanel/product/new 
 router.get('/new', async function (req, res, next) {
-    const categories =await categoryController.getAllCategories();
-    res.render('product/form', {categories});
+    const categories = await categoryController.getAllCategories();
+    res.render('product/form', { categories });
 });
 
-router.post('/new', [uploadImage.single('image'),] ,async function (req, res, next) {
-   
-    // image = 'https://cdn2.cellphones.com.vn/358x358,webp,q100/media/catalog/product/t/_/t_m_12.png'
+router.post('/new', [uploadImage.single('image'),], async function (req, res, next) {
+
     try {
-        let {body, file} = req;
-        if(file){
-            console.log("file is not null");
+        let { body, file } = req;
+        if (file) {
+            // console.log("file is not null");
             let image = `http://${IP}:3000/images/${file.filename}`;
-            body = { ...body, image: image}
+            body = { ...body, image: image }
         }
-        let {name, price, quantity, image, category} = body;
-        console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
+        let { name, price, quantity, image, category } = body;
+        // console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
 
         await productController.addNewProduct(name, price, quantity, image, category);
         return res.render('product/form')
@@ -47,5 +46,44 @@ router.post('/new', [uploadImage.single('image'),] ,async function (req, res, ne
         console.log(error)
     }
 });
+
+
+// http://localhost:3000/cpanel/product/:id/edit 
+router.get('/:id/edit', async function (req, res, next) {
+    try {
+        const { id } = req.params;
+        const product = await productController.getProductBuyId(id);
+        const categories = await categoryController.getAllCategories();
+        categories.forEach(element => {
+            element.selected = false;
+            if (element._id == product.category) {
+                element.selected = true;
+            }
+        });
+        res.render('product/edit', { categories, product });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post('/:id/edit', [uploadImage.single('image'),], async function (req, res, next) {
+    try {
+        let { id } = req.params;
+        let { body, file } = req;
+        if (file) {
+            let image = `http://${IP}:3000/images/${file.filename}`;
+            body = { ...body, image: image }
+        }
+        let { name, price, quantity, image, category } = body;
+        // console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
+
+        await productController.updateProduct(id, name, price, quantity, image, category);
+        return res.render('product/edit');
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+});
+
 
 module.exports = router;

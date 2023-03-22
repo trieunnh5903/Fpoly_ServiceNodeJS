@@ -38,7 +38,7 @@
                     <span class="text">Statistics</span>
                 </a>
             </li>
-            <li class="nav-item nav-item-has-children">
+            <li class="nav-item active nav-item-has-children">
                 <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_5"
                     aria-controls="ddmenu_5" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon">
@@ -55,7 +55,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a href="/cpanel/product/list-product">
                     <span class="icon">
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,13 +63,13 @@
                                 d="M4.58333 3.66675H17.4167C17.9029 3.66675 18.3692 3.8599 18.713 4.20372C19.0568 4.54754 19.25 5.01385 19.25 5.50008V16.5001C19.25 16.9863 19.0568 17.4526 18.713 17.7964C18.3692 18.1403 17.9029 18.3334 17.4167 18.3334H4.58333C4.0971 18.3334 3.63079 18.1403 3.28697 17.7964C2.94315 17.4526 2.75 16.9863 2.75 16.5001V5.50008C2.75 5.01385 2.94315 4.54754 3.28697 4.20372C3.63079 3.8599 4.0971 3.66675 4.58333 3.66675ZM4.58333 7.33341V11.0001H10.0833V7.33341H4.58333ZM11.9167 7.33341V11.0001H17.4167V7.33341H11.9167ZM4.58333 12.8334V16.5001H10.0833V12.8334H4.58333ZM11.9167 12.8334V16.5001H17.4167V12.8334H11.9167Z" />
                         </svg>
                     </span>
-                    <span class="text">Tables</span>
+                    <span class="text">List</span>
                 </a>
             </li>
             <span class="divider">
                 <hr />
             </span>
-        
+
             <li class="nav-item">
                 <a href="notification.html">
                     <span class="icon">
@@ -260,15 +260,15 @@
     </header>
     <!-- ========== header end ========== -->
 
-    <!-- ========== table components start ========== -->
-    <section class="table-components">
+    <!-- ========== tab components start ========== -->
+    <section class="tab-components">
         <div class="container-fluid">
             <!-- ========== title-wrapper start ========== -->
             <div class="title-wrapper pt-30">
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title mb-30">
-                            <h2>List</h2>
+                            <h2>Edit Product</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -279,8 +279,9 @@
                                     <li class="breadcrumb-item">
                                         <a href="#0">Dashboard</a>
                                     </li>
+                                    <li class="breadcrumb-item"><a href="#0">Edit</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        List
+                                        Edit Product
                                     </li>
                                 </ol>
                             </nav>
@@ -292,91 +293,176 @@
             </div>
             <!-- ========== title-wrapper end ========== -->
 
-            <!-- ========== tables-wrapper start ========== -->
-            <div class="tables-wrapper">    
+            <!-- ========== form-elements-wrapper start ========== -->
+            <div class="form-elements-wrapper">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <form method="post" action="/cpanel/product/{{product._id}}/edit" enctype="multipart/form-data" class="col-lg-12">
+                        <!-- input style start -->
                         <div class="card-style mb-30">
-                            <h6 class="mb-10">List Product</h6>
-                            <p class="text-sm mb-20">
-                                For basic styling—light padding and only horizontal
-                                dividers—use the class table.
-                            </p>
-                            <div class="table-wrapper table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <h6>#</h6>
-                                            </th>
-                                            <th>
-                                                <h6>Name</h6>
-                                            </th>
-                                            <th>
-                                                <h6>Price</h6>
-                                            </th>
-                                            <th>
-                                                <h6>Quantity</h6>
-                                            </th>
-                                            <th>
-                                                <h6>Status</h6>
-                                            </th>
-                                            <th>
-                                                <h6>Action</h6>
-                                            </th>
-                                        </tr>
-                                        <!-- end table row-->
-                                    </thead>
-                                    <tbody>
-                                        {{#each products}}
-                                        <tr>
-                                            <td>
-                                                <div style="width: 150px;">
-                                                    <img style="width: 150px;" src='{{this.image}}' alt="" />
-                                                </div>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>{{this.name}}</p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p><a href="#0">{{this.price}}</a></p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>{{this.quantity}}</p>
-                                            </td>
-                                            <td class="min-width" id="status">
-                                                <span class="status-btn active-btn">Active</span>
-                                            </td>
-                                            <td>
-                                                {{!-- confirmDelete('{{this._id}}'); --}}
-                                                <div class="action">
-                                                    <button onclick=confirmDelete('{{this._id}}') class="text-danger">
-                                                        <i class="lni lni-trash-can"></i>
-                                                    </button>
-                                                </div>
-                                                 <div class="action">
-                                                    <button class="text-danger">
-                                                        <a href="/cpanel/product/{{this._id}}/edit "><i class="lni lni-pencil-alt"></i></a>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        {{/each}}
-                                        <!-- end table row -->
-                                    </tbody>
-                                </table>
-                                <!-- end table -->
+                            <div class="input-style-1">
+                                <label>Name</label>
+                                <input name="name" value="{{product.name}}" type="text" />
                             </div>
+                            <div class="input-style-1">
+                                <label>Quantity</label>
+                                <input name="quantity" value="{{product.quantity}}" type="text" />
+                            </div>
+                            <div class="input-style-1">
+                                <label>Price</label>
+                                <input name="price" value="{{product.price}}" type="text" />
+                            </div>
+                            <div class="select-style-1">
+                                <label>Category</label>
+                                <div class="select-position">
+                                    <select>
+                                        {{#each categories}}
+                                        {{#if this.selected}}
+                                        <option selected value="">{{this.name}}</option>
+                                        {{else}}
+                                        <option value="">{{this.name}}</option>
+                                        {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-style-1">
+                                <label>Image</label>
+                                <input name="image" type="file" onchange="previewFile()" />
+                                <img id="imgProduct" src="" height="200">
+                            </div>
+                            <div class="col-12">
+                                <div class="button-group d-flex justify-content-center flex-wrap">
+                                    <button class=" main-btn 
+                                                primary-btn
+                                                btn-hover
+                                                w-100
+                                                text-center" type="submit">Submit</button>
+                                    {{!-- <a href="home.html" class="  main-btn primary-btn
+                                                btn-hover
+                                                w-100
+                                                text-center" role="button"> Login
+                                    </a> --}}
+                                </div>
+                            </div>
+                            <!-- end input -->
+
                         </div>
                         <!-- end card -->
-                    </div>
+                    </form>
+                    <!-- end col -->
+                    {{!-- <div class="col-lg-6">
+                        <!-- ======= textarea style start ======= -->
+                        <div class="card-style mb-30">
+                            <h6 class="mb-25">Textarea</h6>
+                            <div class="input-style-1">
+                                <label>Message</label>
+                                <textarea placeholder="Message" rows="5"></textarea>
+                            </div>
+                            <!-- end textarea -->
+                            <div class="input-style-3">
+                                <textarea placeholder="Message" rows="5"></textarea>
+                                <span class="icon"><i class="lni lni-text-format"></i></span>
+                            </div>
+                            <!-- end textarea -->
+                        </div>
+                        <!-- ======= textarea style end ======= -->
+
+                        <!-- ======= checkbox style start ======= -->
+                        <div class="card-style mb-30">
+                            <h6 class="mb-25">Checkbox</h6>
+                            <div class="form-check checkbox-style mb-20">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox-1" />
+                                <label class="form-check-label" for="checkbox-1">
+                                    Default Checkbox</label>
+                            </div>
+                            <!-- end checkbox -->
+                            <div class="form-check checkbox-style mb-20">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox-2" disabled />
+                                <label class="form-check-label" for="checkbox-2">
+                                    Disabled Checkbox</label>
+                            </div>
+                            <!-- end checkbox -->
+                            <div class="form-check checkbox-style checkbox-success mb-20">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox-3" />
+                                <label class="form-check-label" for="checkbox-3">
+                                    Success Checkbox</label>
+                            </div>
+                            <!-- end checkbox -->
+                            <div class="form-check checkbox-style checkbox-warning mb-20">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox-4" />
+                                <label class="form-check-label" for="checkbox-4">
+                                    Warning Checkbox</label>
+                            </div>
+                            <!-- end checkbox -->
+                            <div class="form-check checkbox-style checkbox-danger mb-20">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox-5" />
+                                <label class="form-check-label" for="checkbox-5">
+                                    Danger Checkbox</label>
+                            </div>
+                            <!-- end checkbox -->
+                        </div>
+                        <!-- ======= checkbox style end ======= -->
+
+                        <!-- ======= radio style start ======= -->
+                        <div class="card-style mb-30">
+                            <h6 class="mb-25">Radio</h6>
+                            <div class="form-check radio-style mb-20">
+                                <input class="form-check-input" type="radio" value="" id="radio-1" />
+                                <label class="form-check-label" for="radio-1">
+                                    Default Radio</label>
+                            </div>
+                            <!-- end radio -->
+                            <div class="form-check radio-style mb-20">
+                                <input class="form-check-input" type="radio" value="" id="radio-2" disabled />
+                                <label class="form-check-label" for="radio-2">
+                                    Disabled Radio</label>
+                            </div>
+                            <!-- end radio -->
+                            <div class="form-check radio-style radio-success mb-20">
+                                <input class="form-check-input" type="radio" value="" id="radio-3" />
+                                <label class="form-check-label" for="radio-3">
+                                    Success Radio</label>
+                            </div>
+                            <!-- end radio -->
+                            <div class="form-check radio-style radio-warning mb-20">
+                                <input class="form-check-input" type="radio" value="" id="radio-4" />
+                                <label class="form-check-label" for="radio-4">
+                                    Warning Radio</label>
+                            </div>
+                            <!-- end radio -->
+                            <div class="form-check radio-style radio-danger mb-20">
+                                <input class="form-check-input" type="radio" value="" id="radio-5" />
+                                <label class="form-check-label" for="radio-5">
+                                    Danger Radio</label>
+                            </div>
+                            <!-- end radio -->
+                        </div>
+                        <!-- ======= radio style end ======= -->
+                    </div> --}}
                     <!-- end col -->
                 </div>
                 <!-- end row -->
             </div>
-            <!-- ========== tables-wrapper end ========== -->
+            <!-- ========== form-elements-wrapper end ========== -->
         </div>
         <!-- end container -->
     </section>
-    <!-- ========== table components end ========== -->
+    <!-- ========== tab components end ========== -->
+    <script>
+        function previewFile() {
+            var preview = document.getElementById('imgProduct')
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+            }
+        }
+    </script>
 </main>
