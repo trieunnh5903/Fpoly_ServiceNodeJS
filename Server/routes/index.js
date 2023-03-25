@@ -1,22 +1,27 @@
 var express = require('express');
 var router = express.Router();
+const auth = require('../middleware/Authentication');
 //http://localhost:3000/
 const userController = require('../components/users/UserController');
+const jwt = require('jsonwebtoken');
 //trang-chu
-router.get('/', function(req, res, next){
+router.get('/', [auth.authenWeb], function(req, res, next){
   res.render('index');
 });
 
 
 //login
-router.get('/login', function(req, res, next){
+router.get('/login', [auth.authenWeb], function(req, res, next){
   res.render('user/login');
 });
 
 //handler result login
-router.post('/login', async function(req, res, next){
+router.post('/login', [auth.authenWeb], async function(req, res, next){
   const {email, password} = req.body;
   const result = await userController.login(email, password);
+  //  save to session
+  const token = jwt.sign({_id: result._id}, 'secrect');
+  req.session.token = token;
   if (result) {
     return res.redirect('/cpanel/product/list-product');
   }else {
@@ -24,6 +29,11 @@ router.post('/login', async function(req, res, next){
   }
 });
 
+
+router.get('/logout', [auth.authenWeb], function(req, res, next){
+  req.session.destroy();
+  res.redirect('/login');
+});
 
 //statistic
 router.get('/statistic', function(req, res, next){
