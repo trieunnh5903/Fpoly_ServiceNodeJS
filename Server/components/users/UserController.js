@@ -4,4 +4,7 @@ const login = async (email, password) => {
     return await userService.login(email, password);
 }
 
-module.exports = {login}
+const register = async (email, password, name) => {
+    return await userService.register(email, password, name);
+}
+module.exports = {login, register}
