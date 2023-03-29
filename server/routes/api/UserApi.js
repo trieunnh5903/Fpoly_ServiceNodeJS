@@ -20,7 +20,7 @@ router.post('/login', async function (req, res, next) {
 });
 
 //localhost:3000/api/user/register
-router.post('/register', [validation.validationRegister], async function (req, res, next) {
+router.post('/register',[validation.validationRegister], async function (req, res, next) {
     try {
         const { email, password, name } = req.body;
         const result = await userController.register(email, password, name);

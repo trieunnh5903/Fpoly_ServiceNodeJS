@@ -32,17 +32,20 @@ var users = [
     {
         _id: 1,
         email: 'abc@gmail.com',
-        password: 'abc'
+        password: 'abc',
+        name: 'Wallworke'
     },
     {
         _id: 2,
         email: '123@gmail.com',
-        password: '123'
+        password: '123',
+        name: 'Screwton'
     },
     {
         _id: 3,
         email: '234@gmail.com',
-        password: '234'
+        password: '234',
+        name: 'Screwton'
     }
 ]
 module.exports = {login, register}
