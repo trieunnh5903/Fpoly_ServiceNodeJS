@@ -29,10 +29,10 @@ const data = [{
     "_id": 10,
     "name": "Shelden"
 }]
-
+const categoryModel = require('./CategoryModel');
 const getAllCategories = async () => {
     try {
-        return data
+        return categoryModel.find();
     } catch (error) {
         console.log("getAllCategories : " + error)
     }
