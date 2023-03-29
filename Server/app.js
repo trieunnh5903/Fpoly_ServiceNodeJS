@@ -6,13 +6,22 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 
-
-
 const productApiRouter = require('./routes/api/ProductApi');
 const userApiRouter = require('./routes/api/UserApi');
 const productCpanelRouter = require('./routes/cpanel/ProductCpanel');
 const userCpanelRouter = require('./routes/cpanel/UserCpanel');
 var app = express();
+const mongoose = require('mongoose');
+require('./components/category/CategoryModel')
+require('./components/products/ProductModel')
+
+mongoose.connect('mongodb://127.0.0.1:27017/GroceryShop', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+  .catch(err => console.log('>>>>>>>>> DB Error: ', err));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

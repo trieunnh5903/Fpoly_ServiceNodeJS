@@ -1,21 +1,26 @@
+const productModel = require('./ProductModel');
+
 const getAllProducts = async (size, page) => {
     try {
-        return data;
+        return await productModel.find();
 
     } catch (error) {
         console.log("getAllProducts: ", error);
+        return [];
     }
 };
 
 const deleteProductById = async (id) => {
     try {
-        const index = data.findIndex(item => item._id == id)
-        if (index >= 0) {
-            data.splice(index, 1);
-        }
+        // const index = data.findIndex(item => item._id == id)
+        // if (index >= 0) {
+        //     data.splice(index, 1);
+        // }
+        await productModel.findByIdAndDelete(id);
+        return true;
     } catch (error) {
         console.log("deleteProductById: ", error);
-        throw error;
+        return false;
     }
 
 };
@@ -24,30 +29,28 @@ const deleteProductById = async (id) => {
 
 const getProductBuyId = async (id) => {
     try {
-        let product = data.find(item => item._id == id);
+        // let product = data.find(item => item._id == id);
+        let product = await productModel.findById(id);
         return product;
     } catch (error) {
         console.log("getProductBuyId error:  " + error);
-        return null;
     }
+    return null;
 }
 
 
 
 const updateProduct = async (id, name, price, quantity, image, category) => {
     try {
-        const product = data.find(item => item._id == id);
-        if (product) {
-            data = data.map(item => {
-                if (item._id == id) {
-                    item.category = category ? category : item.category;
-                    item.image = image ? image : item.image;
-                    item.name = name ? name : item.name;
-                    item.price = price ? price : item.price;
-                    item.quantity = quantity ? quantity : item.quantity;
-                }
-                return item;
-            });
+        // const product = data.find(item => item._id == id);
+        let item = await productModel.findById(id);
+        if (item) {
+            item.category = category ? category : item.category;
+            item.image = image ? image : item.image;
+            item.name = name ? name : item.name;
+            item.price = price ? price : item.price;
+            item.quantity = quantity ? quantity : item.quantity;
+            await item.save();
             return true;
         }
         return false;
@@ -60,16 +63,19 @@ const updateProduct = async (id, name, price, quantity, image, category) => {
 const addNewProduct = async (name, price, quantity, image, category) => {
     try {
         const newProduct = {
-            _id: data.length + 1,
+          //  _id: data.length + 1,
             name,
             price,
             quantity,
             image,
             category
         }
-        data.push(newProduct);
+      //  data.push(newProduct);
+      productModel.create(newProduct);
+      return true;
     } catch (error) {
         console.log("addNewProduct: " + error)
+        return false;
     }
 }
 module.exports = { getAllProducts, deleteProductById, addNewProduct, updateProduct, getProductBuyId }

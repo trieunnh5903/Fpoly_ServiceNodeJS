@@ -317,9 +317,9 @@
                                     <select>
                                         {{#each categories}}
                                         {{#if this.selected}}
-                                        <option selected value="">{{this.name}}</option>
+                                        <option selected value="{{this._id}}">{{this.name}}</option>
                                         {{else}}
-                                        <option value="">{{this.name}}</option>
+                                        <option value="{{this._id}}">{{this.name}}</option>
                                         {{/if}}
                                         {{/each}}
                                     </select>

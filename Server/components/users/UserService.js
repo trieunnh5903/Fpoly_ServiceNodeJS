@@ -1,3 +1,5 @@
+const userModel = require('./UserModel');
+
 const login = async (email, password) => {
     const user = users.find(user => user.email == email);
     if (user && user.password == password){
