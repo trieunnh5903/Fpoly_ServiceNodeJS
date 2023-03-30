@@ -314,9 +314,9 @@
                               <div class="select-style-1">
                                 <label>Category</label>
                                 <div class="select-position">
-                                    <select>
+                                    <select name="category">
                                         {{#each categories}}
-                                        <option value="">{{this.name}}</option>
+                                        <option value="{{this._id}}">{{this.name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>

@@ -38,7 +38,7 @@ router.post('/new', [auth.authenWeb, uploadImage.single('image'),], async functi
             body = { ...body, image: image }
         }
         let { name, price, quantity, image, category } = body;
-        // console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
+        console.log(">>>>>>>>>>>>>>>>>> add param" + category);
 
         await productController.addNewProduct(name, price, quantity, image, category);
         return res.render('product/form')
@@ -54,12 +54,16 @@ router.get('/:id/edit', [auth.authenWeb], async function (req, res, next) {
         const { id } = req.params;
         const product = await productController.getProductBuyId(id);
         const categories = await categoryController.getAllCategories();
-        categories.forEach(element => {
-            element.selected = false;
-            if (element._id == product.category) {
+        console.log("????????????????? " + product.category);
+        for (let index = 0; index < categories.length; index++) {
+            let element = categories[index];
+            if (element._id.toString() == product.category.toString()) {
                 element.selected = true;
+            } else {
+                element.selected = false;
             }
-        });
+
+        }
         res.render('product/edit', { categories, product });
     } catch (error) {
         next(error);
@@ -75,8 +79,6 @@ router.post('/:id/edit', [auth.authenWeb, uploadImage.single('image'),], async f
             body = { ...body, image: image }
         }
         let { name, price, quantity, image, category } = body;
-        // console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
-
         await productController.updateProduct(id, name, price, quantity, image, category);
         return res.render('product/edit');
     } catch (error) {
