@@ -19,12 +19,12 @@
                 </a>
                 <ul id="ddmenu_1" class="collapse dropdown-nav">
                     <li>
-                        <a href="http://localhost:3000/"> Details </a>
+                        <a href="/"> Details </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="http://localhost:3000/statistic">
+                <a href="/statistic">
                     <span class="icon">
                         <!-- <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -248,7 +248,7 @@
                                     <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
                                 </li>
                                 <li>
-                                    <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+                                    <a href="/logout"> <i class="lni lni-exit"></i> Sign Out </a>
                                 </li>
                             </ul>
                         </div>
@@ -314,7 +314,7 @@
                             <div class="select-style-1">
                                 <label>Category</label>
                                 <div class="select-position">
-                                    <select>
+                                    <select name="category">
                                         {{#each categories}}
                                         {{#if this.selected}}
                                         <option selected value="{{this._id}}">{{this.name}}</option>
@@ -337,108 +337,13 @@
                                                 btn-hover
                                                 w-100
                                                 text-center" type="submit">Submit</button>
-                                    {{!-- <a href="home.html" class="  main-btn primary-btn
-                                                btn-hover
-                                                w-100
-                                                text-center" role="button"> Login
-                                    </a> --}}
                                 </div>
                             </div>
                             <!-- end input -->
 
                         </div>
                         <!-- end card -->
-                    </form>
-                    <!-- end col -->
-                    {{!-- <div class="col-lg-6">
-                        <!-- ======= textarea style start ======= -->
-                        <div class="card-style mb-30">
-                            <h6 class="mb-25">Textarea</h6>
-                            <div class="input-style-1">
-                                <label>Message</label>
-                                <textarea placeholder="Message" rows="5"></textarea>
-                            </div>
-                            <!-- end textarea -->
-                            <div class="input-style-3">
-                                <textarea placeholder="Message" rows="5"></textarea>
-                                <span class="icon"><i class="lni lni-text-format"></i></span>
-                            </div>
-                            <!-- end textarea -->
-                        </div>
-                        <!-- ======= textarea style end ======= -->
-
-                        <!-- ======= checkbox style start ======= -->
-                        <div class="card-style mb-30">
-                            <h6 class="mb-25">Checkbox</h6>
-                            <div class="form-check checkbox-style mb-20">
-                                <input class="form-check-input" type="checkbox" value="" id="checkbox-1" />
-                                <label class="form-check-label" for="checkbox-1">
-                                    Default Checkbox</label>
-                            </div>
-                            <!-- end checkbox -->
-                            <div class="form-check checkbox-style mb-20">
-                                <input class="form-check-input" type="checkbox" value="" id="checkbox-2" disabled />
-                                <label class="form-check-label" for="checkbox-2">
-                                    Disabled Checkbox</label>
-                            </div>
-                            <!-- end checkbox -->
-                            <div class="form-check checkbox-style checkbox-success mb-20">
-                                <input class="form-check-input" type="checkbox" value="" id="checkbox-3" />
-                                <label class="form-check-label" for="checkbox-3">
-                                    Success Checkbox</label>
-                            </div>
-                            <!-- end checkbox -->
-                            <div class="form-check checkbox-style checkbox-warning mb-20">
-                                <input class="form-check-input" type="checkbox" value="" id="checkbox-4" />
-                                <label class="form-check-label" for="checkbox-4">
-                                    Warning Checkbox</label>
-                            </div>
-                            <!-- end checkbox -->
-                            <div class="form-check checkbox-style checkbox-danger mb-20">
-                                <input class="form-check-input" type="checkbox" value="" id="checkbox-5" />
-                                <label class="form-check-label" for="checkbox-5">
-                                    Danger Checkbox</label>
-                            </div>
-                            <!-- end checkbox -->
-                        </div>
-                        <!-- ======= checkbox style end ======= -->
-
-                        <!-- ======= radio style start ======= -->
-                        <div class="card-style mb-30">
-                            <h6 class="mb-25">Radio</h6>
-                            <div class="form-check radio-style mb-20">
-                                <input class="form-check-input" type="radio" value="" id="radio-1" />
-                                <label class="form-check-label" for="radio-1">
-                                    Default Radio</label>
-                            </div>
-                            <!-- end radio -->
-                            <div class="form-check radio-style mb-20">
-                                <input class="form-check-input" type="radio" value="" id="radio-2" disabled />
-                                <label class="form-check-label" for="radio-2">
-                                    Disabled Radio</label>
-                            </div>
-                            <!-- end radio -->
-                            <div class="form-check radio-style radio-success mb-20">
-                                <input class="form-check-input" type="radio" value="" id="radio-3" />
-                                <label class="form-check-label" for="radio-3">
-                                    Success Radio</label>
-                            </div>
-                            <!-- end radio -->
-                            <div class="form-check radio-style radio-warning mb-20">
-                                <input class="form-check-input" type="radio" value="" id="radio-4" />
-                                <label class="form-check-label" for="radio-4">
-                                    Warning Radio</label>
-                            </div>
-                            <!-- end radio -->
-                            <div class="form-check radio-style radio-danger mb-20">
-                                <input class="form-check-input" type="radio" value="" id="radio-5" />
-                                <label class="form-check-label" for="radio-5">
-                                    Danger Radio</label>
-                            </div>
-                            <!-- end radio -->
-                        </div>
-                        <!-- ======= radio style end ======= -->
-                    </div> --}}
+                    </form>                    
                     <!-- end col -->
                 </div>
                 <!-- end row -->

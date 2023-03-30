@@ -3,9 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var session = require('express-session');
 var indexRouter = require('./routes/index');
-
 const productApiRouter = require('./routes/api/ProductApi');
 const userApiRouter = require('./routes/api/UserApi');
 const productCpanelRouter = require('./routes/cpanel/ProductCpanel');
@@ -40,13 +39,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'iloveyou',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
 app.use('/', indexRouter);
 app.use('/api/user', userApiRouter);
 app.use('/api/product', productApiRouter);
 app.use('/cpanel/user', userCpanelRouter);
 app.use('/cpanel/product', productCpanelRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

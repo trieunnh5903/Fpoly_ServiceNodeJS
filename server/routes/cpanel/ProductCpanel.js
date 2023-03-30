@@ -4,15 +4,15 @@ const productController = require('../../components/products/ProductController')
 const categoryController = require('../../components/category/CategoryController');
 const uploadImage = require('../../middleware/UploadImage');
 const IP = require('../../config/ip');
-
+const auth = require('../../middleware/Authentication');
 // http://localhost:3000/cpanel/product/list-product
-router.get('/list-product', async function (req, res, next) {
+router.get('/list-product', [auth.authenWeb], async function (req, res, next) {
     const products = await productController.getAllProducts();
     res.render('product/table', { products });
 });
 
 // http://localhost:3000/cpanel/product/:id/delete
-router.get('/:id/delete', async function (req, res, next) {
+router.get('/:id/delete', [auth.authenWeb], async function (req, res, next) {
     try {
         const { id } = req.params;
         await productController.deleteProductById(id);
@@ -23,12 +23,12 @@ router.get('/:id/delete', async function (req, res, next) {
 });
 
 // http://localhost:3000/cpanel/product/new 
-router.get('/new', async function (req, res, next) {
+router.get('/new', [auth.authenWeb], async function (req, res, next) {
     const categories = await categoryController.getAllCategories();
     res.render('product/form', { categories });
 });
 
-router.post('/new', [uploadImage.single('image'),], async function (req, res, next) {
+router.post('/new', [auth.authenWeb, uploadImage.single('image'),], async function (req, res, next) {
 
     try {
         let { body, file } = req;
@@ -38,7 +38,7 @@ router.post('/new', [uploadImage.single('image'),], async function (req, res, ne
             body = { ...body, image: image }
         }
         let { name, price, quantity, image, category } = body;
-        // console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
+        console.log(">>>>>>>>>>>>>>>>>> add param" + category);
 
         await productController.addNewProduct(name, price, quantity, image, category);
         return res.render('product/form')
@@ -49,24 +49,28 @@ router.post('/new', [uploadImage.single('image'),], async function (req, res, ne
 
 
 // http://localhost:3000/cpanel/product/:id/edit 
-router.get('/:id/edit', async function (req, res, next) {
+router.get('/:id/edit', [auth.authenWeb], async function (req, res, next) {
     try {
         const { id } = req.params;
         const product = await productController.getProductBuyId(id);
         const categories = await categoryController.getAllCategories();
-        categories.forEach(element => {
-            element.selected = false;
-            if (element._id == product.category) {
+        console.log("????????????????? " + product.category);
+        for (let index = 0; index < categories.length; index++) {
+            let element = categories[index];
+            if (element._id.toString() == product.category.toString()) {
                 element.selected = true;
+            } else {
+                element.selected = false;
             }
-        });
+
+        }
         res.render('product/edit', { categories, product });
     } catch (error) {
         next(error);
     }
 });
 
-router.post('/:id/edit', [uploadImage.single('image'),], async function (req, res, next) {
+router.post('/:id/edit', [auth.authenWeb, uploadImage.single('image'),], async function (req, res, next) {
     try {
         let { id } = req.params;
         let { body, file } = req;
@@ -75,8 +79,6 @@ router.post('/:id/edit', [uploadImage.single('image'),], async function (req, re
             body = { ...body, image: image }
         }
         let { name, price, quantity, image, category } = body;
-        // console.log(">>>>>>>>>>>>>>>>>> add param" + name, image);
-
         await productController.updateProduct(id, name, price, quantity, image, category);
         return res.render('product/edit');
     } catch (error) {

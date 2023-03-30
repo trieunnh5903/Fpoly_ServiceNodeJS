@@ -14,4 +14,3 @@ const schema = new Schema({
     category: {type: ObjectId, ref: 'category'} // khoas ngoai
 });
 module.exports = mongoose.models.product || mongoose.model('product', schema);
-// category -----> categories
