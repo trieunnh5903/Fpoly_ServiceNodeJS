@@ -1,31 +1,41 @@
 const userModel = require('./UserModel');
-
+const bcrypt = require('bcryptjs')
 const login = async (email, password) => {
-    const user = users.find(user => user.email == email);
-    if (user && user.password == password){
-        return user;
+    try {
+        const user = await userModel.findOne({ email: email });
+        if (user) {
+            let check = bcrypt.compareSync(password, user.password);
+            return check ? true : false;
+        }
+    } catch (error) {
+        console.log("login: " + error);
     }
-    return null;
+    return false;
 }
 
-const register = async (email, password, name) =>{
-     try {
-        const user = users.find(user => user.email == email);
+const register = async (email, password, name) => {
+    try {
+        const user = await userModel.findOne({ email: email });
+        // console.log(">>>>>>>>>>>>>" + JSON.stringify(user));
+
         if (!user) {
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(password, salt);
+            console.log("**************" + email);
             const newUser = {
-                _id : users.length + 1,
-                email,
-                password,
-                name
+                email: email,
+                password: hash,
+                name: name
             };
-            users.push(newUser);
+            await userModel.create(newUser);
             return true;
+        } else {
+            return false;
         }
-        return false;
-     } catch (error) {
+
+    } catch (error) {
         console.log("register: " + error);
-        return false;
-     }
+    }
 };
 
 var users = [
@@ -48,4 +58,4 @@ var users = [
         name: 'Screwton'
     }
 ]
-module.exports = {login, register}
+module.exports = { login, register }
