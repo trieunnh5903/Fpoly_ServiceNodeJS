@@ -4,10 +4,11 @@ const ObjectId = Schema.ObjectId;
 const schema = new Schema({
     id: { type: ObjectId }, // khóa chính
     name: {
-        type: String, // kiểu dữ liệu      
+        type: String,
+        require: true    
     },
-    emai: {
-        type: String, require: true, unique: true,
+    email: {
+        type: String, require: true, unique: true
     },
     password: {
         type: String,

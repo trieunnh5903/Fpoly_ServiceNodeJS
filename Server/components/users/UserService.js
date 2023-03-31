@@ -16,12 +16,9 @@ const login = async (email, password) => {
 const register = async (email, password, name) => {
     try {
         const user = await userModel.findOne({ email: email });
-        // console.log(">>>>>>>>>>>>>" + JSON.stringify(user));
-
         if (!user) {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
-            console.log("**************" + email);
             const newUser = {
                 email: email,
                 password: hash,
