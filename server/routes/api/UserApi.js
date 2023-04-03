@@ -8,7 +8,7 @@ router.post('/login', async function (req, res, next) {
         const { email, password } = req.body;
         const result = await userController.login(email, password);
         if (result) {
-            return res.status(200).json({ error: false, user: { email: email, password: password } });
+            return res.status(200).json({ error: false, user: result });
         } else {
             return res.status(400).json({ error: true, message: 'Email or password failed' });
         }

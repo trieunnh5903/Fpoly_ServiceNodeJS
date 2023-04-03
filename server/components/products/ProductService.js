@@ -1,5 +1,22 @@
 const productModel = require('./ProductModel');
 
+const addNewProduct = async (name, price, quantity, image, category) => {
+    try {
+        const newProduct = {
+            name,
+            price,
+            quantity,
+            image,
+            category
+        }
+        await productModel.create(newProduct);
+        return true;
+    } catch (error) {
+        console.log("addNewProduct: " + error)
+    }
+    return false;
+}
+
 const getAllProducts = async (size, page) => {
     try {
         return await productModel.find();
@@ -8,6 +25,26 @@ const getAllProducts = async (size, page) => {
     }
     return [];
 };
+
+// lay thong tin san pham theo id
+const getProductBuyId = async (id) => {
+    try {
+        let product = await productModel.findById(id);
+        return product;
+    } catch (error) {
+        console.log("getProductBuyId error:  " + error);
+    }
+    return null;
+}
+
+const getProductBuyCategory = async (idCategory) => {
+    try {
+        let products = await productModel.find({ category: idCategory }).exec();
+        return products;
+    } catch (error) {
+        console.log("getProductBuyCategory error:  " + error);
+    }
+}
 
 const deleteProductById = async (id) => {
     try {
@@ -18,18 +55,6 @@ const deleteProductById = async (id) => {
     }
     return false;
 };
-
-// lay thong tin san pham theo id
-
-const getProductBuyId = async (id) => {
-    try {
-        let product = await productModel.findById(id);
-        return product;
-    } catch (error) {
-        console.log("getProductBuyId error:  " + error);
-    }
-    return null;
-}
 
 const updateProduct = async (id, name, price, quantity, image, category) => {
     try {
@@ -49,20 +74,21 @@ const updateProduct = async (id, name, price, quantity, image, category) => {
     return false;
 }
 
-const addNewProduct = async (name, price, quantity, image, category) => {
+const search = async (keyword) => {
     try {
-        const newProduct = {
-            name,
-            price,
-            quantity,
-            image,
-            category
+        //gt: greater than, lt: less than, $lte: less then equal
+        // AND: and
+        // $or: [{quantity: {$lte: 100}}, {quantity:{$lt: 4000}}, ....{dieu kien}]
+        let query = {
+            price: { $gt: 1000, $lt: 4000 },
+            //$regex: regular expression
+            //$option: i:ignorekey
+            name: { $regex: keyword, $option: 'i' }
         }
-        await productModel.create(newProduct);
-        return true;
+
+        return await productModel.find(query);
     } catch (error) {
-        console.log("addNewProduct: " + error)
+        console.log("search: " + error);
     }
-    return false;
 }
-module.exports = { getAllProducts, deleteProductById, addNewProduct, updateProduct, getProductBuyId }
+module.exports = { getAllProducts, deleteProductById, addNewProduct, updateProduct, getProductBuyId, search, getProductBuyCategory }

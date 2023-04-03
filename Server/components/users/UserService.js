@@ -5,7 +5,7 @@ const login = async (email, password) => {
         const user = await userModel.findOne({ email: email });
         if (user) {
             let check = bcrypt.compareSync(password, user.password);
-            return check ? true : false;
+            return check ? user : false;
         }
     } catch (error) {
         console.log("login: " + error);
