@@ -26,9 +26,12 @@ const register = async (email, password, name) => {
             };
             await userModel.create(newUser);
             return true;
-        } else {
-            return false;
         }
+        if (user && name) {
+            await userModel.findByIdAndUpdate(user._id, { name });
+            return true;
+        }
+        return false;
 
     } catch (error) {
         console.log("register: " + error);
