@@ -30,6 +30,12 @@ const authenWeb = (req, res, next) => {
                     if (url.includes('login')) {
                         res.redirect('/');
                     } else {
+                        const { role } = decoded;
+                        if (role < 100) {
+                            req.session.destroy();
+                            return res.redirect('/login');
+
+                        }
                         next();
                     }
                 }

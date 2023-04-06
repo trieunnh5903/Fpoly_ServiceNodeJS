@@ -79,14 +79,14 @@ const search = async (keyword) => {
         //gt: greater than, lt: less than, $lte: less then equal
         // AND: and
         // $or: [{quantity: {$lte: 100}}, {quantity:{$lt: 4000}}, ....{dieu kien}]
-        let query = {
-            // price: { $gt: 1000, $lt: 4000 },
-            //$regex: regular expression
-            //$option: i:ignorekey
-            name: { $regex: keyword, $option: 'i' }
-        }
-
-        return await productModel.find(query);
+        // let query = {
+        //     // price: { $gt: 1000, $lt: 4000 },
+        //     //$regex: regular expression
+        //     //$option: i:ignorekey
+        //     name: { $regex: keyword, $option: 'i' }
+        // }
+        let product = await productModel.find({ name: { $regex: keyword, $options: "i"} });
+        return product
     } catch (error) {
         console.log("search: " + error);
     }
