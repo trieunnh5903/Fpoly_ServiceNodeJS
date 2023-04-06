@@ -29,7 +29,7 @@ const getAllProducts = async (size, page) => {
 // lay thong tin san pham theo id
 const getProductBuyId = async (id) => {
     try {
-        let product = await productModel.findById(id);
+        let product = await productModel.findById(id).populate('category');
         return product;
     } catch (error) {
         console.log("getProductBuyId error:  " + error);
@@ -80,7 +80,7 @@ const search = async (keyword) => {
         // AND: and
         // $or: [{quantity: {$lte: 100}}, {quantity:{$lt: 4000}}, ....{dieu kien}]
         let query = {
-            price: { $gt: 1000, $lt: 4000 },
+            // price: { $gt: 1000, $lt: 4000 },
             //$regex: regular expression
             //$option: i:ignorekey
             name: { $regex: keyword, $option: 'i' }
