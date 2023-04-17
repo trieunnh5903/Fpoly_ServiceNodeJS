@@ -19,18 +19,21 @@ const register = async (email, password, name) => {
     return await userService.register(email, password, name);
 }
 
+const uploadAvatar = async (id, avatar) => {
+    return await userService.uploadAvatar(id, avatar);
+}
 const sendMail = async (email, subject, content) => {
     try {
-         const mailOption = {
-        from: "admin",
-        to: email,
-        subject,
-        html: content
-    }
-    return await transporter.sendMail(mailOption);
+        const mailOption = {
+            from: "admin",
+            to: email,
+            subject,
+            html: content
+        }
+        return await transporter.sendMail(mailOption);
     } catch (error) {
         console.log("sendMail: ", error);
     }
-   
+
 }
-module.exports = {login, register, sendMail}
+module.exports = { login, register, uploadAvatar, sendMail }

@@ -34,24 +34,22 @@ const register = async (email, password, name) => {
     }
 };
 
-var users = [
-    {
-        _id: 1,
-        email: 'abc@gmail.com',
-        password: 'abc',
-        name: 'Wallworke'
-    },
-    {
-        _id: 2,
-        email: '123@gmail.com',
-        password: '123',
-        name: 'Screwton'
-    },
-    {
-        _id: 3,
-        email: '234@gmail.com',
-        password: '234',
-        name: 'Screwton'
+const uploadAvatar = async (id, avatar) => {
+    try {
+        console.log("+++++++++++++++ " + JSON.stringify(id));
+        const user = await userModel.findById(id);
+        console.log(">>>>>>>>>>>>>>> + " + JSON.stringify(user));
+        if (user) {
+            user = {
+                ...user, avatar: avatar
+            }
+            await user.save();
+            return true
+        }
+    } catch (error) {
+        console.log("uploadAvatar: " + error);
     }
-]
-module.exports = { login, register }
+    return false;
+
+}
+module.exports = { login, register, uploadAvatar }

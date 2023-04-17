@@ -85,7 +85,7 @@ const search = async (keyword) => {
         //     //$option: i:ignorekey
         //     name: { $regex: keyword, $option: 'i' }
         // }
-        let product = await productModel.find({ name: { $regex: keyword, $options: "i"} });
+        let product = await productModel.find({ name: { $regex: keyword, $options: "i"} }).populate('category');
         return product
     } catch (error) {
         console.log("search: " + error);
