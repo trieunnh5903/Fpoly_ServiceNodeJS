@@ -1,10 +1,12 @@
 const userModel = require('./UserModel');
 const bcrypt = require('bcryptjs')
 const login = async (email, password) => {
+    console.log("user login", email, password);
     try {
         const user = await userModel.findOne({ email: email });
         if (user) {
             let check = bcrypt.compareSync(password, user.password);
+            console.log(check);
             return check ? user : false;
         }
     } catch (error) {
