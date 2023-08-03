@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var indexRouter = require('./routes/index');
+const categoryApiRouter = require('./routes/api/CategoryApi');
 const productApiRouter = require('./routes/api/ProductApi');
 const userApiRouter = require('./routes/api/UserApi');
 const productCpanelRouter = require('./routes/cpanel/ProductCpanel');
@@ -47,6 +48,7 @@ app.use(session({
 }));
 
 app.use('/', indexRouter);
+app.use('/api/category', categoryApiRouter);
 app.use('/api/user', userApiRouter);
 app.use('/api/product', productApiRouter);
 app.use('/cpanel/user', userCpanelRouter);

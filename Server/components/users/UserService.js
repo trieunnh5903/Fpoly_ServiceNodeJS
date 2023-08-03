@@ -1,51 +1,55 @@
 const userModel = require('./UserModel');
-
+const bcrypt = require('bcryptjs')
 const login = async (email, password) => {
-    const user = users.find(user => user.email == email);
-    if (user && user.password == password){
-        return user;
+    try {
+        const user = await userModel.findOne({ email: email });
+        if (user) {
+            let check = bcrypt.compareSync(password, user.password);
+            return check ? user : false;
+        }
+    } catch (error) {
+        console.log("login: " + error);
     }
-    return null;
+    return false;
 }
 
-const register = async (email, password, name) =>{
-     try {
-        const user = users.find(user => user.email == email);
+const register = async (email, password, name) => {
+    try {
+        const user = await userModel.findOne({ email: email });
         if (!user) {
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(password, salt);
             const newUser = {
-                _id : users.length + 1,
-                email,
-                password,
-                name
+                email: email,
+                password: hash,
+                name: name
             };
-            users.push(newUser);
+            await userModel.create(newUser);
             return true;
         }
         return false;
-     } catch (error) {
+
+    } catch (error) {
         console.log("register: " + error);
-        return false;
-     }
+    }
 };
 
-var users = [
-    {
-        _id: 1,
-        email: 'abc@gmail.com',
-        password: 'abc',
-        name: 'Wallworke'
-    },
-    {
-        _id: 2,
-        email: '123@gmail.com',
-        password: '123',
-        name: 'Screwton'
-    },
-    {
-        _id: 3,
-        email: '234@gmail.com',
-        password: '234',
-        name: 'Screwton'
+const uploadAvatar = async (id, avatar) => {
+    try {
+        console.log("+++++++++++++++ " + JSON.stringify(id));
+        const user = await userModel.findById(id);
+        console.log(">>>>>>>>>>>>>>> + " + JSON.stringify(user));
+        if (user) {
+            user = {
+                ...user, avatar: avatar
+            }
+            await user.save();
+            return true
+        }
+    } catch (error) {
+        console.log("uploadAvatar: " + error);
     }
-]
-module.exports = {login, register}
+    return false;
+
+}
+module.exports = { login, register, uploadAvatar }

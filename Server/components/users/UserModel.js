@@ -4,15 +4,17 @@ const ObjectId = Schema.ObjectId;
 const schema = new Schema({
     id: { type: ObjectId }, // khóa chính
     name: {
-        type: String, // kiểu dữ liệu
-        required: true, // bắt buộc phải có
-        unique: true, // không được trùng
-        trim: true, // bỏ khoảng trắng 2 đầu
-        minlength: 3, // độ dài tối thiểu
-        maxlength: 50, // độ dài tối đa
+        type: String,
+        require: true
     },
-    emai: { type: String },
-    password: { type: String }
+    email: {
+        type: String, require: true, unique: true
+    },
+    password: {
+        type: String,
+        require: true
+    },
+    role: { type: Number, default: 1 }
 });
 module.exports = mongoose.models.user || mongoose.model('user', schema);
 // user -----> users

@@ -1,10 +1,10 @@
 const validationRegister = async (req, res, next) => {
     try {
-        const { email, password, name, confirmPassword } = req.body;
-        if (!email || !password || !confirmPassword || !name) {
+        const { email, password, confirmPassword } = req.body;
+        if (!email || !password || !confirmPassword) {
             return res.status(400).json({
                 error: true,
-                message: 'Thong tin khong day du'
+                message: 'Thông tin không đầy đủ'
             })
         } else {
             if (password != confirmPassword) {
