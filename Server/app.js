@@ -15,13 +15,16 @@ const mongoose = require('mongoose');
 require('./components/category/CategoryModel')
 require('./components/products/ProductModel')
 
-mongoose.connect('mongodb://127.0.0.1:27017/GroceryShop', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+// mongoose.connect('mongodb://127.0.0.1:27017/GroceryShop', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+//   .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+//   .catch(err => console.log('>>>>>>>>> DB Error: ', err));
+mongoose.connect("mongodb+srv://honghanh9403:honghanh9403@cluster0.duvsau7.mongodb.net/FreshMarket?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
   .catch(err => console.log('>>>>>>>>> DB Error: ', err));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,7 +35,7 @@ app.set('view engine', 'hbs');
 
 //partials
 var hbs = require('hbs');
-hbs.registerPartials(__dirname + '/views/partials', function (err) {});
+hbs.registerPartials(__dirname + '/views/partials', function (err) { });
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -55,12 +58,12 @@ app.use('/cpanel/user', userCpanelRouter);
 app.use('/cpanel/product', productCpanelRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

@@ -8,6 +8,8 @@ const login = async (email, password) => {
             let check = bcrypt.compareSync(password, user.password);
             console.log(check);
             return check ? user : false;
+        }else{
+            console.log("nulllllllllllllllllllllllll");
         }
     } catch (error) {
         console.log("login: " + error);

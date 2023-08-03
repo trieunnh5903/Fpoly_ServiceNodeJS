@@ -8,7 +8,7 @@ const auth = require('../../middleware/Authentication');
 // http://localhost:3000/cpanel/product/list-product
 router.get('/list-product', [auth.authenWeb],  async function (req, res, next) {
     const products = await productController.getAllProducts();
-    res.render('product/table', { products });
+    res.render('list-product', { products });
 });
 
 // http://localhost:3000/cpanel/product/:id/delete
@@ -25,7 +25,7 @@ router.get('/:id/delete', [auth.authenWeb], async function (req, res, next) {
 // http://localhost:3000/cpanel/product/new 
 router.get('/new',[auth.authenWeb], async function (req, res, next) {
     const categories = await categoryController.getAllCategories();
-    res.render('product/form', { categories });
+    res.render('insert', { categories });
 });
 
 router.post('/new', [ uploadImage.single('image'),], async function (req, res, next) {
@@ -41,7 +41,7 @@ router.post('/new', [ uploadImage.single('image'),], async function (req, res, n
         console.log(">>>>>>>>>>>>>>>>>> add param" + category);
 
         await productController.addNewProduct(name, price, quantity, image, category);
-        return res.render('product/form')
+        return res.render('insert')
     } catch (error) {
         console.log(error)
     }
@@ -64,7 +64,7 @@ router.get('/:id/edit', [auth.authenWeb], async function (req, res, next) {
             }
 
         }
-        res.render('product/edit', { categories, product });
+        res.render('list-product', { categories, product });
     } catch (error) {
         next(error);
     }
@@ -80,7 +80,7 @@ router.post('/:id/edit', [ uploadImage.single('image'),], async function (req, r
         }
         let { name, price, quantity, image, category } = body;
         await productController.updateProduct(id, name, price, quantity, image, category);
-        return res.render('product/edit');
+        return res.render('edit');
     } catch (error) {
         console.log(error)
         next(error)

@@ -5,18 +5,18 @@ const auth = require('../middleware/Authentication');
 const userController = require('../components/users/UserController');
 const jwt = require('jsonwebtoken');
 //trang-chu
-router.get('/', [auth.authenWeb], function (req, res, next) {
+router.get('/',[auth.authenWeb], function (req, res, next) {
   res.render('index');
 });
 
 
 //login
-router.get('/login', [auth.authenWeb], function (req, res, next) {
-  res.render('user/login');
+router.get('/login',[auth.authenWeb], function (req, res, next) {
+  res.render('login');
 });
 
 //handler result login
-router.post('/login', [auth.authenWeb], async function (req, res, next) {
+router.post('/login',[auth.authenWeb], async function (req, res, next) {
   const { email, password } = req.body;
   const result = await userController.login(email, password);
   //  save to session
@@ -25,28 +25,30 @@ router.post('/login', [auth.authenWeb], async function (req, res, next) {
     req.session.token = token;
     return res.redirect('/cpanel/product/list-product');
   } else {
-    return res.redirect('/login');
+    console.log("user not logged in");
+    return res.redirect('login');
+
   }
 });
 
 
 router.get('/logout', [auth.authenWeb], function (req, res, next) {
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect('login');
 });
 
 //statistic
 router.get('/statistic', function (req, res, next) {
-  res.render('product/statistic');
+  res.render('statistic');
 });
 
 //form
 router.get('/form', function (req, res, next) {
-  res.render('product/form');
+  res.render('form');
 });
 
 // table
 router.get('/table', async function (req, res, next) {
-  res.render('product/table');
+  res.render('table');
 });
 module.exports = router;
